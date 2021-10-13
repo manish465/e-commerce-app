@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { server_url } from "../utils";
 
 const Signup = () => {
     const [emailData, setEmailData] = useState("");
@@ -12,7 +13,7 @@ const Signup = () => {
         } else {
             setLoading(true);
             const data = { email: emailData, password: passwordData };
-            fetch("http://localhost:8000/api/user/sign-up", {
+            fetch(server_url + "user/sign-up", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

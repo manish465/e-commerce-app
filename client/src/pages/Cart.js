@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Container, ListGroup } from "react-bootstrap";
 
 import { productContext } from "../context/ProductContext";
+import { server_url } from "../utils";
 
 const Cart = () => {
     const { cart, dispatch } = useContext(productContext);
@@ -18,6 +19,25 @@ const Cart = () => {
                 .toFixed(2),
         );
     }, [cart]);
+
+    const handelCheckOut = () => {
+        const data = {
+            productsList: [cart.map((product) => product.id)],
+            total: totalPrice,
+        };
+
+        fetch(server_url + "products/order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((data) =>
+                alert("Checkout complete with id : " + data.orderId),
+            );
+    };
 
     return (
         <Container className='m-2'>
@@ -47,7 +67,12 @@ const Cart = () => {
                 ))
             )}
             <h2>TOTAL : ${totalPrice}</h2>
-            <Button variant='primary'>CHECKOUT</Button>
+            <Button
+                variant='primary'
+                onClick={handelCheckOut}
+                disabled={cart.length === 0}>
+                CHECKOUT
+            </Button>
         </Container>
     );
 };

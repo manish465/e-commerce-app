@@ -2,12 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { Card, Container, Button } from "react-bootstrap";
 
 import { productContext } from "../context/ProductContext";
+import { server_url } from "../utils";
 
 const Home = () => {
     const [data, setData] = useState(null);
     const { dispatch } = useContext(productContext);
     useEffect(() => {
-        fetch("http://localhost:8000/api/products/show", {
+        fetch(server_url + "products/show", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

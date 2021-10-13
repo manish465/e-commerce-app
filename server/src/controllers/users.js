@@ -21,7 +21,7 @@ exports.signUp = async (req, res) => {
     hash_password = bcrypt.hashSync(password, 5);
     db.collection("users").insertOne(
         { email: email, password: hash_password },
-        (err, result) => {
+        (err, _result) => {
             if (err) {
                 return res.status(400).json({ msg: "somthing went wrong" });
             }

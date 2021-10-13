@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Form, Button } from "react-bootstrap";
 import { userContext } from "../context/UserContext";
 import { useHistory } from "react-router-dom";
+import { server_url } from "../utils";
 
 const Login = () => {
     const [emailData, setEmailData] = useState("");
@@ -17,7 +18,7 @@ const Login = () => {
         } else {
             setLoading(true);
             const data = { email: emailData, password: passwordData };
-            fetch("http://localhost:8000/api/user/log-in", {
+            fetch(server_url + "user/log-in", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
