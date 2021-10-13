@@ -2,12 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const compression = require("compression");
 
 const app = express();
 const port = process.env.PORT || 8000;
 dotenv.config();
 
 app.use(cors());
+app.use(compression());
 app.use(express.json());
 
 const userRouter = require("./routers/users");

@@ -48,7 +48,7 @@ exports.logIn = (req, res) => {
                         { _id: user._id },
                         process.env.JWT_SECRET,
                     );
-                    user.hash_password = undefined;
+                    user.password = undefined;
                     return res.status(200).json({ token, user });
                 }
                 return res.status(400).json({ msg: "Invalid Input" });
