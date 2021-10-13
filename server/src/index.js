@@ -15,13 +15,17 @@ app.use(express.json());
 const userRouter = require("./routers/users");
 
 app.get("/", (_req, res) => {
-    res.send("Welcome to e-commerce app");
+    res.json({ msg: "welcome to e-comm app" });
 });
 
 app.use("/api/user", userRouter);
 
-mongoose.connect(process.env.DB_URI, (err) => {
-    err
-        ? console.log("Something went wrong")
-        : app.listen(port, () => console.log("Connected to db & server"));
-});
+mongoose.connect(
+    process.env.DB_URI,
+    { useUnifiedTopology: true, useNewUrlParser: true },
+    (err) => {
+        err
+            ? console.log("Something went wrong")
+            : app.listen(port, () => console.log("Connected to db & server"));
+    },
+);
