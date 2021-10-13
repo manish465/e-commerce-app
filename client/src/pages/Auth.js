@@ -9,7 +9,7 @@ const Auth = () => {
         <Tabs
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className='w-100 h-100 p-3 mx-auto'>
+            className='w-100 h-100 mx-auto'>
             <Tab eventKey='signup' title='Sign Up'>
                 <Signup />
             </Tab>

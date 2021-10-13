@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Form, Button } from "react-bootstrap";
+import { userContext } from "../context/UserContext";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
     const [emailData, setEmailData] = useState("");
     const [passwordData, setPasswordData] = useState("");
     const [loading, setLoading] = useState(false);
+    const { setAuthData } = useContext(userContext);
+    const history = useHistory();
+
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if (emailData === "" || passwordData === "") {
@@ -21,11 +26,21 @@ const Login = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    localStorage.setItem("auth", JSON.stringify(data));
+                    setAuthData((prev) => ({
+                        ...prev,
+                        user: data.user,
+                        isAuthenticated: true,
+                    }));
+                })
+                .then(() => {
                     setLoading(false);
-                    console.log(data);
-                });
+                    history.push("/");
+                })
+                .catch((err) => console.log(err));
         }
     };
+
     return (
         <Form className='p-5' onSubmit={(e) => onSubmitHandler(e)}>
             <Form.Group className='mb-3' controlId='formBasicEmail'>
